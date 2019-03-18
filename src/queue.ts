@@ -1,7 +1,7 @@
-import { LinkedList } from './linked-list'
+import { LinkedList, DoublyLinkedList } from './linked-list'
 
 export class Queue<T> {
-  private readonly list: LinkedList<T>
+  private readonly list: DoublyLinkedList<T>
 
   public constructor() {
     this.list = new LinkedList<T>()

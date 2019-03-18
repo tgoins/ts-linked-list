@@ -1,24 +1,28 @@
 import { Node } from './node'
 
-export interface LinkedList<T> {
-  addToFront(data: T): LinkedList<T>
+export interface SinglyLinkedList<T> {
   addToRear(data: T): LinkedList<T>
   addAfter(element: T, newData: T): LinkedList<T>
-  addBefore(element: T, newData: T): LinkedList<T>
-  removeFront(): LinkedList<T>
   removeRear(): LinkedList<T>
   removeFirst(data: T): LinkedList<T>
   removeAll(data: T): LinkedList<T>
   replaceFirst(find: T, replaceWith: T): LinkedList<T>
   replaceAll(find: T, replaceWith: T): LinkedList<T>
-  getFront(): T | undefined
   getRear(): T | undefined
   clear(): LinkedList<T>
   getSize(): number
   isEmpty(): boolean
+  traverse(): IterableIterator<T>
 }
 
-export class LinkedList<T> implements LinkedList<T> {
+export interface DoublyLinkedList<T> extends SinglyLinkedList<T> {
+  addToFront(data: T): LinkedList<T>
+  removeFront(): LinkedList<T>
+  getFront(): T | undefined
+  addBefore(element: T, newData: T): LinkedList<T>
+}
+
+export class LinkedList<T> implements DoublyLinkedList<T> {
   private front: Node<T> | undefined
   private rear: Node<T> | undefined
   private size: number = 0
@@ -275,17 +279,11 @@ export class LinkedList<T> implements LinkedList<T> {
     return this.size === 0
   }
 
-  public forEach(callback: (data: T, list: this) => void) {
+  public *traverse() {
     let currentNode = this.rear
 
     while (currentNode) {
-      const data = currentNode.getData()
-
-      if (!data) {
-        return
-      }
-
-      callback(data, this)
+      yield currentNode.getData()
       currentNode = currentNode.getNext()
     }
   }

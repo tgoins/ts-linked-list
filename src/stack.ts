@@ -1,7 +1,7 @@
-import { LinkedList } from './linked-list'
+import { LinkedList, SinglyLinkedList } from './linked-list'
 
 export class Stack<T> {
-  private readonly list: LinkedList<T>
+  private readonly list: SinglyLinkedList<T>
 
   public constructor() {
     this.list = new LinkedList<T>()
