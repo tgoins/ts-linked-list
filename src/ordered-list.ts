@@ -49,6 +49,10 @@ export class OrderedList<T extends number | string> {
     return this.list.isEmpty()
   }
 
+  public getSize() {
+    return this.list.getSize()
+  }
+
   public getMinimum() {
     return this.list.getRear()
   }

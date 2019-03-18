@@ -33,4 +33,8 @@ export class Queue<T> {
   public isEmpty() {
     return this.list.isEmpty()
   }
+
+  public getSize() {
+    return this.list.getSize()
+  }
 }
