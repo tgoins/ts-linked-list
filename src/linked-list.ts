@@ -7,6 +7,10 @@ export interface LinkedList<T> {
   addBefore(element: T, newData: T): LinkedList<T>
   removeFront(): LinkedList<T>
   removeRear(): LinkedList<T>
+  removeFirst(data: T): LinkedList<T>
+  removeAll(data: T): LinkedList<T>
+  replaceFirst(find: T, replaceWith: T): LinkedList<T>
+  replaceAll(find: T, replaceWith: T): LinkedList<T>
   getFront(): T | undefined
   getRear(): T | undefined
   clear(): LinkedList<T>
@@ -157,6 +161,101 @@ export class LinkedList<T> implements LinkedList<T> {
 
     this.rear = this.rear.getNext()
     this.size--
+
+    return this
+  }
+
+  public removeFirst(data: T) {
+    let currentNode = this.rear
+
+    while (currentNode) {
+      if (currentNode.getData() !== data) {
+        currentNode = currentNode.getNext()
+        continue
+      }
+
+      if (currentNode === this.rear) {
+        return this.removeRear()
+      }
+
+      if (currentNode === this.front) {
+        return this.removeFront()
+      }
+
+      const previous = currentNode.getPrevious()!
+      const next = currentNode.getNext()!
+
+      previous.setNext(next)
+      next.setPrevious(previous)
+
+      this.size--
+    }
+
+    return this
+  }
+
+  public removeAll(data: T) {
+    let currentNode = this.rear
+
+    while (currentNode) {
+      if (currentNode.getData() !== data) {
+        currentNode = currentNode.getNext()
+        continue
+      }
+
+      if (currentNode === this.rear) {
+        this.removeRear()
+        continue
+      }
+
+      if (currentNode === this.front) {
+        this.removeFront()
+        continue
+      }
+
+      const previous = currentNode.getPrevious()!
+      const next = currentNode.getNext()!
+
+      previous.setNext(next)
+      next.setPrevious(previous)
+
+      this.size--
+
+      currentNode = next
+    }
+
+    return this
+  }
+
+  public replaceFirst(find: T, replaceWith: T) {
+    let currentNode = this.rear
+
+    while (currentNode) {
+      if (currentNode.getData() !== find) {
+        currentNode = currentNode.getNext()
+        continue
+      }
+
+      currentNode.setData(replaceWith)
+      break
+    }
+
+    return this
+  }
+
+  public replaceAll(find: T, replaceWith: T) {
+    let currentNode = this.rear
+
+    while (currentNode) {
+      if (currentNode.getData() !== find) {
+        currentNode = currentNode.getNext()
+        continue
+      }
+
+      currentNode.setData(replaceWith)
+
+      currentNode = currentNode.getNext()
+    }
 
     return this
   }
