@@ -48,4 +48,12 @@ export class OrderedList<T extends number | string> {
   public isEmpty() {
     return this.list.isEmpty()
   }
+
+  public getMinimum() {
+    return this.list.getRear()
+  }
+
+  public getMaximum() {
+    return this.list.getFront()
+  }
 }
